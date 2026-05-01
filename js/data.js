@@ -10,6 +10,7 @@ const produtos = [
     destaque: true,
     maisVendido: true,
     nota: 'Floral ambarado com bergamota, peonia e baunilha.',
+    imagem: 'assets/images/dior home perfume.jpeg',
     visual: { tipo: 'perfume', cor: '#d7b56d', acento: '#111216', label: 'AUREA' }
   },
   {

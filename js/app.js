@@ -4,10 +4,13 @@ let cart = [];
 
 const formatPrice = value => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-function productArt(product, small = false) {
+function productArt(product) {
+  if (product.imagem) {
+    return `<img class="product-photo" src="${product.imagem}" alt="${product.nome}" loading="lazy">`;
+  }
   const v = product.visual || {};
   return `
-    <div class="product-art${small ? ' small-art' : ''}"
+    <div class="product-art"
       data-type="${v.tipo || 'perfume'}"
       data-label="${v.label || product.marca.slice(0, 5)}"
       style="--product:${v.cor || '#c9a45f'};--accent:${v.acento || '#111216'}">
@@ -16,14 +19,10 @@ function productArt(product, small = false) {
 }
 
 function productCard(product) {
-  const badges = [
-    product.destaque ? '<span>Destaque</span>' : ''
-  ].join('');
-
   return `
     <article class="product-card">
-      <div class="product-badges">${badges}</div>
-      <div class="product-art-wrap">${productArt(product)}</div>
+      <div class="product-badges">${product.maisVendido ? '<span>Mais vendido</span>' : ''}</div>
+      <div class="product-art-wrap${product.imagem ? ' has-photo' : ''}">${productArt(product)}</div>
       <div class="product-body">
         <div class="product-meta"><span>${product.categoria}</span><span>${product.marca}</span></div>
         <div class="product-name">${product.nome}</div>

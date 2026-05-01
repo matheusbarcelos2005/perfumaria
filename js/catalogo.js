@@ -5,15 +5,17 @@ let currentCategory = 'Todos';
 let currentBrand = 'Todas';
 let searchQuery = '';
 let sortMode = 'default';
-let destaqueOnly = false;
 
 const formatPrice = value => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const normalize = value => value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-function productArt(product, small = false) {
+function productArt(product) {
+  if (product.imagem) {
+    return `<img class="product-photo" src="${product.imagem}" alt="${product.nome}" loading="lazy">`;
+  }
   const v = product.visual || {};
   return `
-    <div class="product-art${small ? ' small-art' : ''}"
+    <div class="product-art"
       data-type="${v.tipo || 'perfume'}"
       data-label="${v.label || product.marca.slice(0, 5)}"
       style="--product:${v.cor || '#c9a45f'};--accent:${v.acento || '#111216'}">
@@ -22,14 +24,10 @@ function productArt(product, small = false) {
 }
 
 function productCard(product) {
-  const badges = [
-    product.destaque ? '<span>Destaque</span>' : ''
-  ].join('');
-
   return `
     <article class="product-card">
-      <div class="product-badges">${badges}</div>
-      <div class="product-art-wrap">${productArt(product)}</div>
+      <div class="product-badges">${product.maisVendido ? '<span>Mais vendido</span>' : ''}</div>
+      <div class="product-art-wrap${product.imagem ? ' has-photo' : ''}">${productArt(product)}</div>
       <div class="product-body">
         <div class="product-meta"><span>${product.categoria}</span><span>${product.marca}</span></div>
         <div class="product-name">${product.nome}</div>
@@ -198,7 +196,6 @@ function renderFilterList(hostId, items, activeValue, onClick, totalLabel) {
 function passesFilters(product) {
   if (currentCategory !== 'Todos' && product.categoria !== currentCategory) return false;
   if (currentBrand !== 'Todas' && product.marca !== currentBrand) return false;
-  if (destaqueOnly && !product.destaque) return false;
   if (!searchQuery) return true;
   const haystack = normalize(`${product.nome} ${product.marca} ${product.categoria} ${product.nota}`);
   return normalize(searchQuery).split(/\s+/).every(token => haystack.includes(token));
@@ -254,7 +251,6 @@ function renderActiveFilters() {
   if (currentCategory !== 'Todos') chips.push(['category', currentCategory]);
   if (currentBrand !== 'Todas') chips.push(['brand', currentBrand]);
   if (searchQuery) chips.push(['search', `"${searchQuery}"`]);
-  if (destaqueOnly) chips.push(['highlight', 'Destaques']);
 
   host.innerHTML = chips.map(([type, label]) => `
     <span class="filter-chip">${label}<button type="button" data-chip="${type}">x</button></span>
@@ -275,7 +271,6 @@ function clearFilter(type) {
     searchQuery = '';
     document.querySelectorAll('#searchInput, #mobileSearchInput').forEach(input => input.value = '');
   }
-  if (type === 'highlight') destaqueOnly = false;
   syncControls();
 }
 
@@ -284,7 +279,6 @@ function clearAllFilters() {
   currentBrand = 'Todas';
   searchQuery = '';
   sortMode = 'default';
-  destaqueOnly = false;
   document.querySelectorAll('#searchInput, #mobileSearchInput').forEach(input => input.value = '');
   syncControls();
   renderAll();
@@ -297,14 +291,12 @@ function updateFilterBadge() {
     currentCategory !== 'Todos',
     currentBrand !== 'Todas',
     searchQuery,
-    destaqueOnly,
     sortMode !== 'default'
   ].filter(Boolean).length;
   badge.textContent = count ? count : '';
 }
 
 function syncControls() {
-  document.querySelectorAll('#destaqueFilter, #drawerDestaque').forEach(input => input.checked = destaqueOnly);
   document.querySelectorAll('#sortSelect, #drawerSort').forEach(select => select.value = sortMode);
   document.querySelectorAll('#searchInput, #mobileSearchInput').forEach(input => {
     if (input.value !== searchQuery) input.value = searchQuery;
@@ -392,13 +384,6 @@ function wireControls() {
     });
   });
 
-  document.querySelectorAll('#destaqueFilter, #drawerDestaque').forEach(input => {
-    input.addEventListener('change', () => {
-      destaqueOnly = input.checked;
-      renderAll();
-    });
-  });
-
   document.getElementById('clearAllBtn')?.addEventListener('click', clearAllFilters);
   document.getElementById('drawerClear')?.addEventListener('click', clearAllFilters);
 
@@ -433,9 +418,7 @@ function wireControls() {
 function applyQueryParams() {
   const params = new URLSearchParams(window.location.search);
   const categoria = params.get('categoria');
-  const filtro = params.get('filtro');
   if (categoria && getCategories().includes(categoria)) currentCategory = categoria;
-  if (filtro === 'destaques') destaqueOnly = true;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
