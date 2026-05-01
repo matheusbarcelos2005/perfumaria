@@ -261,7 +261,7 @@ section { padding: 86px 0; }
 .category-tile strong { font-family: var(--font-serif); font-size: 25px; font-weight: 400; }
 .category-tile small { color: var(--muted); line-height: 1.5; }
 
-.featured-section, .contact-section { background: rgba(255,255,255,.025); }
+.contact-section { background: rgba(255,255,255,.025); }
 .section-head {
   display: flex;
   justify-content: space-between;

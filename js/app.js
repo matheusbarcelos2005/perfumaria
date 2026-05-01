@@ -240,10 +240,4 @@ document.addEventListener('DOMContentLoaded', () => {
   wireCommon();
   wireCartModal();
 
-  const featured = produtos.filter(product => product.destaque).slice(0, 6);
-  const featuredGrid = document.getElementById('featuredGrid');
-  if (featuredGrid) {
-    featuredGrid.innerHTML = featured.map(productCard).join('');
-    wireProductButtons(featuredGrid);
-  }
 });
