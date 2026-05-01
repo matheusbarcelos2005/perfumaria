@@ -8,6 +8,11 @@ let sortMode = 'default';
 
 const formatPrice = value => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const normalize = value => value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const searchCategories = [
+  { categoria: 'Perfumes', termos: ['perfume', 'perfumes'] },
+  { categoria: 'Cremes', termos: ['creme', 'cremes'] },
+  { categoria: 'Hidratantes', termos: ['hidratante', 'hidratantes'] }
+];
 
 function productArt(product) {
   if (product.imagem) {
@@ -118,7 +123,7 @@ function renderCart() {
 
   list.innerHTML = validItems.map(({ item, product }) => `
     <div class="cart-item">
-      <div class="cart-thumb"><div class="cart-image-placeholder" aria-hidden="true"></div></div>
+      <div class="cart-thumb">${product.imagem ? `<img src="${product.imagem}" alt="${product.nome}">` : '<div class="cart-image-placeholder" aria-hidden="true"></div>'}</div>
       <div class="cart-name">${product.nome}<small>${product.marca} - ${product.categoria}</small></div>
       <div class="qty-control">
         <button type="button" data-qty="${product.id}" data-delta="-1">-</button>
@@ -164,25 +169,38 @@ function getCategories() {
   return [...new Set(produtos.map(product => product.categoria))].sort();
 }
 
-function getBrands() {
-  return [...new Set(produtos.map(product => product.marca))].sort();
+function productsInCategory(category = currentCategory) {
+  return category === 'Todos'
+    ? produtos
+    : produtos.filter(product => product.categoria === category);
 }
 
-function countBy(key) {
-  return produtos.reduce((map, product) => {
+function getBrands(category = currentCategory) {
+  return [...new Set(productsInCategory(category).map(product => product.marca))].sort();
+}
+
+function countBy(key, source = produtos) {
+  return source.reduce((map, product) => {
     map[product[key]] = (map[product[key]] || 0) + 1;
     return map;
   }, {});
 }
 
-function renderFilterList(hostId, items, activeValue, onClick, totalLabel) {
+function setCategory(value) {
+  currentCategory = value;
+  if (currentBrand !== 'Todas' && !getBrands(currentCategory).includes(currentBrand)) {
+    currentBrand = 'Todas';
+  }
+}
+
+function renderFilterList(hostId, items, activeValue, onClick, totalLabel, source = produtos) {
   const host = document.getElementById(hostId);
   if (!host) return;
-  const countMap = hostId.toLowerCase().includes('brand') ? countBy('marca') : countBy('categoria');
-  const allCount = produtos.length;
+  const countMap = hostId.toLowerCase().includes('brand') ? countBy('marca', source) : countBy('categoria', source);
+  const allCount = source.length;
   host.innerHTML = [totalLabel, ...items].map(item => `
-    <button class="filter-item${item === activeValue ? ' active' : ''}" type="button" data-filter="${item}">
-      <span>${item}</span><b>${item === totalLabel ? allCount : countMap[item]}</b>
+    <button class="filter-item sidebar-cat-item${item === activeValue ? ' active' : ''}" type="button" data-filter="${item}">
+      <span>${item}</span><b class="cat-count">${item === totalLabel ? allCount : countMap[item]}</b>
     </button>
   `).join('');
   host.querySelectorAll('.filter-item').forEach(button => {
@@ -197,8 +215,18 @@ function passesFilters(product) {
   if (currentCategory !== 'Todos' && product.categoria !== currentCategory) return false;
   if (currentBrand !== 'Todas' && product.marca !== currentBrand) return false;
   if (!searchQuery) return true;
+
+  const tokens = normalize(searchQuery).split(/\s+/).filter(Boolean);
+  const categorySearch = searchCategories.find(item => tokens.some(token => item.termos.includes(token)));
+  if (categorySearch && product.categoria !== categorySearch.categoria) return false;
+
+  const remainingTokens = categorySearch
+    ? tokens.filter(token => !categorySearch.termos.includes(token))
+    : tokens;
+  if (!remainingTokens.length) return true;
+
   const haystack = normalize(`${product.nome} ${product.marca} ${product.categoria} ${product.nota}`);
-  return normalize(searchQuery).split(/\s+/).every(token => haystack.includes(token));
+  return remainingTokens.every(token => haystack.includes(token));
 }
 
 function filteredProducts() {
@@ -238,10 +266,12 @@ function renderProducts() {
 }
 
 function renderFilters() {
-  renderFilterList('sidebarCats', getCategories(), currentCategory, value => currentCategory = value, 'Todos');
-  renderFilterList('drawerCats', getCategories(), currentCategory, value => currentCategory = value, 'Todos');
-  renderFilterList('sidebarBrands', getBrands(), currentBrand, value => currentBrand = value, 'Todas');
-  renderFilterList('drawerBrands', getBrands(), currentBrand, value => currentBrand = value, 'Todas');
+  const brandScope = productsInCategory();
+  const brands = getBrands();
+  renderFilterList('sidebarCats', getCategories(), currentCategory, setCategory, 'Todos');
+  renderFilterList('drawerCats', getCategories(), currentCategory, setCategory, 'Todos');
+  renderFilterList('sidebarBrands', brands, currentBrand, value => currentBrand = value, 'Todas', brandScope);
+  renderFilterList('drawerBrands', brands, currentBrand, value => currentBrand = value, 'Todas', brandScope);
 }
 
 function renderActiveFilters() {
@@ -265,7 +295,7 @@ function renderActiveFilters() {
 }
 
 function clearFilter(type) {
-  if (type === 'category') currentCategory = 'Todos';
+  if (type === 'category') setCategory('Todos');
   if (type === 'brand') currentBrand = 'Todas';
   if (type === 'search') {
     searchQuery = '';

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catalogo - Maison Essenza</title>
-  <meta name="description" content="Catalogo de perfumes, cremes corporais e hidratantes Maison Essenza.">
+  <meta name="description" content="Catalogo de perfumes, cremes e hidratantes Maison Essenza.">
   <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/catalogo.css">
@@ -36,8 +36,8 @@
         <p>Produtos organizados por marca, categoria e curadoria para compra rapida.</p>
       </div>
       <div class="cat-stats">
-        <div><strong id="totalProducts">15</strong><span>produtos</span></div>
-        <div><strong id="totalBrands">5</strong><span>marcas</span></div>
+        <div><strong id="totalProducts">26</strong><span>produtos</span></div>
+        <div><strong id="totalBrands">17</strong><span>marcas</span></div>
         <div><strong>3</strong><span>linhas</span></div>
       </div>
     </div>
@@ -83,17 +83,26 @@
   <main class="cat-main">
     <div class="container cat-layout">
       <aside class="cat-sidebar">
-        <div class="filter-card">
-          <h2>Categorias</h2>
-          <div id="sidebarCats" class="filter-stack"></div>
+        <div class="sidebar-section">
+          <div class="sidebar-heading">
+            <span class="sidebar-heading-icon" aria-hidden="true">#</span>
+            Categorias
+          </div>
+          <div id="sidebarCats" class="filter-stack sidebar-cats"></div>
         </div>
-        <div class="filter-card">
-          <h2>Marcas</h2>
-          <div id="sidebarBrands" class="filter-stack"></div>
+        <div class="sidebar-section">
+          <div class="sidebar-heading">
+            <span class="sidebar-heading-icon" aria-hidden="true">+</span>
+            Marcas
+          </div>
+          <div id="sidebarBrands" class="filter-stack sidebar-cats"></div>
         </div>
-        <div class="filter-card">
-          <h2>Ordenar</h2>
-          <select id="sortSelect">
+        <div class="sidebar-section">
+          <div class="sidebar-heading">
+            <span class="sidebar-heading-icon" aria-hidden="true">A</span>
+            Ordenar
+          </div>
+          <select class="sidebar-select" id="sortSelect">
             <option value="default">Padrao</option>
             <option value="name-az">Nome A-Z</option>
             <option value="price-asc">Menor preco</option>

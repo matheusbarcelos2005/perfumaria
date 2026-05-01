@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"a:\\\\SITES\\\\SITES PARA FAZER\\\\maison-essenza\" -Recurse -Include \"*.jpg\",\"*.jpeg\",\"*.png\",\"*.webp\",\"*.avif\",\"*.svg\")",
+      "Bash(Select-Object FullName, Length)"
+    ]
+  }
+}

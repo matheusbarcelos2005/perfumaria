@@ -113,7 +113,7 @@ function renderCart() {
 
   list.innerHTML = validItems.map(({ item, product }) => `
     <div class="cart-item">
-      <div class="cart-thumb"><div class="cart-image-placeholder" aria-hidden="true"></div></div>
+      <div class="cart-thumb">${product.imagem ? `<img src="${product.imagem}" alt="${product.nome}">` : '<div class="cart-image-placeholder" aria-hidden="true"></div>'}</div>
       <div class="cart-name">${product.nome}<small>${product.marca} - ${product.categoria}</small></div>
       <div class="qty-control">
         <button type="button" data-qty="${product.id}" data-delta="-1">-</button>
