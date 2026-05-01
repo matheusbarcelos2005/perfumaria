@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maison Essenza - Perfumes e Cuidados de Luxo</title>
+  <meta name="description" content="Loja de perfumes, cremes corporais e hidratantes premium organizados por marcas.">
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar" id="mainNavbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html" aria-label="Maison Essenza">
+        <img src="assets/images/logo.svg" alt="Maison Essenza">
+      </a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu">Menu</button>
+      <div class="nav-menu" id="navMenu">
+        <a class="nav-link active" href="index.html">Inicio</a>
+        <a class="nav-link" href="catalogo.html">Catalogo</a>
+        <a class="nav-link" href="#marcas">Marcas</a>
+        <a class="nav-link" href="#rituais">Rituais</a>
+        <a class="nav-link" href="#contato">Contato</a>
+        <button class="cart-button" type="button" data-open-cart>
+          Orçamento <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-section" id="home">
+    <div class="hero-backdrop"></div>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Curadoria premium de fragrancias e cuidado</p>
+        <h1>Maison Essenza</h1>
+        <p class="hero-sub">Perfumes marcantes, cremes corporais e hidratantes de toque refinado, organizados por marcas para uma compra calma, bonita e precisa.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="catalogo.html">Ver catalogo</a>
+          <a class="btn-secondary" id="heroWaBtn" href="#">Atendimento</a>
+        </div>
+        <div class="hero-stats" aria-label="Resumo da loja">
+          <div><strong>15</strong><span>produtos</span></div>
+          <div><strong>5</strong><span>marcas</span></div>
+          <div><strong>3</strong><span>linhas</span></div>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="assets/images/hero-luxury.svg" alt="Vitrine premium de perfumes e cremes">
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="catalog-cta">
+      <div class="container split-section">
+        <div>
+          <p class="section-kicker">Catalogo organizado</p>
+          <h2>Escolha por linha, marca ou curadoria.</h2>
+          <p>O catalogo segue a mesma logica funcional do modelo de referencia: busca, filtros por categoria, ordenacao, destaques e orçamento por WhatsApp.</p>
+          <a class="btn-primary compact" href="catalogo.html">Abrir catalogo</a>
+        </div>
+        <div class="category-panel">
+          <a href="catalogo.html?categoria=Perfumes" class="category-tile">
+            <span>01</span><strong>Perfumes</strong><small>Assinaturas olfativas intensas</small>
+          </a>
+          <a href="catalogo.html?categoria=Cremes%20corporais" class="category-tile">
+            <span>02</span><strong>Cremes corporais</strong><small>Texturas ricas e perfumadas</small>
+          </a>
+          <a href="catalogo.html?categoria=Hidratantes" class="category-tile">
+            <span>03</span><strong>Hidratantes</strong><small>Corpo, maos e rotina diaria</small>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="featured-section" id="destaques">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">Destaques</p>
+          <h2>Produtos em evidencia</h2>
+          <a href="catalogo.html?filtro=destaques">Ver todos</a>
+        </div>
+        <div class="products-grid" id="featuredGrid"></div>
+      </div>
+    </section>
+
+    <section class="brands-section" id="marcas">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">Por marcas</p>
+          <h2>Linhas com personalidade propria</h2>
+        </div>
+        <div class="brands-grid">
+          <article><span>MA</span><h3>Maison Aurea</h3><p>Florais dourados, sandalo e cuidado luminoso.</p></article>
+          <article><span>VB</span><h3>Velours Blanc</h3><p>Almiscar limpo, cashmere e acabamento aveludado.</p></article>
+          <article><span>JN</span><h3>Jardin Noir</h3><p>Rosas escuras, ambar e madeiras elegantes.</p></article>
+          <article><span>LR</span><h3>Lumiere Rose</h3><p>Rosa moderna, lichia e pele suavemente iluminada.</p></article>
+          <article><span>BR</span><h3>Belle Rive</h3><p>Neroli, figo verde e frescor mediterraneo.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="ritual-section" id="rituais">
+      <div class="container ritual-grid">
+        <div class="ritual-image" aria-hidden="true">
+          <div class="shelf shelf-one"></div>
+          <div class="shelf shelf-two"></div>
+          <div class="shelf shelf-three"></div>
+        </div>
+        <div>
+          <p class="section-kicker">Ritual Maison</p>
+          <h2>Perfume, textura e presenca.</h2>
+          <p>A experiencia foi pensada para vender produtos de beleza sem bagunca visual: hierarquia clara, filtros objetivos, produtos por marca e cards com informacao suficiente para decidir rapido.</p>
+          <div class="ritual-list">
+            <span>Fragrancias intensas</span>
+            <span>Hidratacao sofisticada</span>
+            <span>Curadoria por marcas</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contato">
+      <div class="container contact-grid">
+        <div>
+          <p class="section-kicker">Contato</p>
+          <h2>Atendimento sob medida</h2>
+          <p>Use o orçamento para enviar os produtos escolhidos diretamente pelo WhatsApp.</p>
+        </div>
+        <div class="contact-card">
+          <p><strong>WhatsApp</strong><a id="phoneLinkContact" href="#">(51) 99999-9999</a></p>
+          <p><strong>E-mail</strong><a id="emailLinkContact" href="#">atendimento@maisonessenza.com.br</a></p>
+          <p><strong>Endereco</strong><span id="addressContact">Rua das Flores, 180 - Porto Alegre</span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <img src="assets/images/logo.svg" alt="Maison Essenza">
+      <div>
+        <strong>Maison Essenza</strong>
+        <span>Perfumes, cremes corporais e hidratantes premium.</span>
+      </div>
+      <a class="btn-secondary compact" href="catalogo.html">Catalogo</a>
+    </div>
+  </footer>
+
+  <button class="fab-cart" type="button" data-open-cart aria-label="Abrir orçamento">
+    <span>Orçamento</span><b id="fabCartCount">0</b>
+  </button>
+
+  <dialog class="cart-modal" id="cartModal">
+    <div class="modal-head">
+      <h2>Meu orçamento</h2>
+      <button type="button" data-close-cart aria-label="Fechar">x</button>
+    </div>
+    <div class="customer-form">
+      <label>Seu nome<input id="customerName" type="text" placeholder="Nome completo"></label>
+      <label>Observacoes<textarea id="customerObs" rows="2" placeholder="Preferencias, presente, duvidas..."></textarea></label>
+    </div>
+    <div id="cartItemsList" class="cart-items"></div>
+    <div class="modal-foot">
+      <button class="btn-secondary compact" type="button" id="clearCartBtn">Limpar</button>
+      <div class="budget-total" id="budgetTotal">Total: <span>R$ 0,00</span></div>
+    </div>
+    <button class="btn-primary full" type="button" id="sendWaBtn">Enviar pelo WhatsApp</button>
+  </dialog>
+
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

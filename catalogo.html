@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogo - Maison Essenza</title>
+  <meta name="description" content="Catalogo de perfumes, cremes corporais e hidratantes Maison Essenza.">
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/catalogo.css">
+</head>
+<body class="catalog-page">
+  <nav class="navbar" id="mainNavbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html" aria-label="Maison Essenza">
+        <img src="assets/images/logo.svg" alt="Maison Essenza">
+      </a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu">Menu</button>
+      <div class="nav-menu" id="navMenu">
+        <a class="nav-link" href="index.html">Inicio</a>
+        <a class="nav-link active" href="catalogo.html">Catalogo</a>
+        <a class="nav-link" href="index.html#marcas">Marcas</a>
+        <a class="nav-link" href="index.html#contato">Contato</a>
+        <button class="cart-button" type="button" data-open-cart>
+          Orçamento <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="cat-header">
+    <div class="container cat-header-grid">
+      <div>
+        <p class="breadcrumb"><a href="index.html">Inicio</a> / Catalogo</p>
+        <h1>Catalogo completo</h1>
+        <p>Produtos organizados por marca, categoria e curadoria para compra rapida.</p>
+      </div>
+      <div class="cat-stats">
+        <div><strong id="totalProducts">15</strong><span>produtos</span></div>
+        <div><strong id="totalBrands">5</strong><span>marcas</span></div>
+        <div><strong>3</strong><span>linhas</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-filter-bar">
+    <label class="search-field">
+      <span>Buscar</span>
+      <input id="mobileSearchInput" type="search" placeholder="Produto, marca...">
+    </label>
+    <button class="filter-button" type="button" id="btnFiltros">Filtros <b id="filterBadge"></b></button>
+  </div>
+
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="filter-drawer" id="filterDrawer" aria-label="Filtros">
+    <div class="drawer-head">
+      <h2>Filtros</h2>
+      <button type="button" id="drawerClose" aria-label="Fechar">x</button>
+    </div>
+    <div class="drawer-section">
+      <h3>Categorias</h3>
+      <div id="drawerCats" class="filter-stack"></div>
+    </div>
+    <div class="drawer-section">
+      <h3>Marcas</h3>
+      <div id="drawerBrands" class="filter-stack"></div>
+    </div>
+    <div class="drawer-section">
+      <h3>Curadoria</h3>
+      <label class="switch-line"><input type="checkbox" id="drawerDestaque"> Apenas destaques</label>
+    </div>
+    <div class="drawer-section">
+      <h3>Ordenar</h3>
+      <select id="drawerSort">
+        <option value="default">Padrao</option>
+        <option value="name-az">Nome A-Z</option>
+        <option value="price-asc">Menor preco</option>
+        <option value="price-desc">Maior preco</option>
+      </select>
+    </div>
+    <div class="drawer-actions">
+      <button type="button" class="btn-secondary compact" id="drawerClear">Limpar</button>
+      <button type="button" class="btn-primary compact" id="drawerApply">Ver resultados</button>
+    </div>
+  </aside>
+
+  <main class="cat-main">
+    <div class="container cat-layout">
+      <aside class="cat-sidebar">
+        <div class="filter-card">
+          <h2>Categorias</h2>
+          <div id="sidebarCats" class="filter-stack"></div>
+        </div>
+        <div class="filter-card">
+          <h2>Marcas</h2>
+          <div id="sidebarBrands" class="filter-stack"></div>
+        </div>
+        <div class="filter-card">
+          <h2>Curadoria</h2>
+          <label class="switch-line"><input type="checkbox" id="destaqueFilter"> Apenas destaques</label>
+        </div>
+        <div class="filter-card">
+          <h2>Ordenar</h2>
+          <select id="sortSelect">
+            <option value="default">Padrao</option>
+            <option value="name-az">Nome A-Z</option>
+            <option value="price-asc">Menor preco</option>
+            <option value="price-desc">Maior preco</option>
+          </select>
+        </div>
+      </aside>
+
+      <section class="cat-products">
+        <div class="cat-toolbar">
+          <label class="search-field">
+            <span>Buscar</span>
+            <input id="searchInput" type="search" placeholder="Produto, marca, nota olfativa...">
+          </label>
+          <div class="toolbar-actions">
+            <span id="resultsInfo"></span>
+            <button class="view-btn active" id="viewGrid" type="button" aria-label="Visualizar em grade">Grade</button>
+            <button class="view-btn" id="viewList" type="button" aria-label="Visualizar em lista">Lista</button>
+          </div>
+        </div>
+        <div class="active-filters" id="activeFilters"></div>
+        <div class="products-grid" id="productsGrid"></div>
+        <div class="no-results" id="noResults">
+          <h2>Nenhum produto encontrado</h2>
+          <p>Ajuste os filtros para ver outras opcoes.</p>
+          <button class="btn-secondary compact" type="button" id="clearAllBtn">Limpar filtros</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer mini-footer">
+    <div class="container footer-inner">
+      <img src="assets/images/logo.svg" alt="Maison Essenza">
+      <span>Maison Essenza - catalogo premium</span>
+      <a class="btn-secondary compact" href="index.html#contato">Contato</a>
+    </div>
+  </footer>
+
+  <button class="fab-cart" type="button" data-open-cart aria-label="Abrir orçamento">
+    <span>Orçamento</span><b id="fabCartCount">0</b>
+  </button>
+
+  <dialog class="cart-modal" id="cartModal">
+    <div class="modal-head">
+      <h2>Meu orçamento</h2>
+      <button type="button" data-close-cart aria-label="Fechar">x</button>
+    </div>
+    <div class="customer-form">
+      <label>Seu nome<input id="customerName" type="text" placeholder="Nome completo"></label>
+      <label>Observacoes<textarea id="customerObs" rows="2" placeholder="Preferencias, presente, duvidas..."></textarea></label>
+    </div>
+    <div id="cartItemsList" class="cart-items"></div>
+    <div class="modal-foot">
+      <button class="btn-secondary compact" type="button" id="clearCartBtn">Limpar</button>
+      <div class="budget-total" id="budgetTotal">Total: <span>R$ 0,00</span></div>
+    </div>
+    <button class="btn-primary full" type="button" id="sendWaBtn">Enviar pelo WhatsApp</button>
+  </dialog>
+
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/catalogo.js"></script>
+</body>
+</html>
